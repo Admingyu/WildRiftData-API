@@ -1,0 +1,8 @@
+package constant
+
+var (
+	SERVER_PORT = 5002
+
+	SUCCESS_STATUS = "SUCCESS"
+	FAILURE_STATUS = "FAILURE"
+)
