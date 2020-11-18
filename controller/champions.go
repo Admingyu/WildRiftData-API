@@ -37,7 +37,7 @@ func ChampionSearch(c *gin.Context) {
 	}
 
 	var ser []serialization.ChampionSearch
-	err = data.Select("champions.id, champions.name, champions.title, champions.thumbnail").Scan(&ser).Error
+	err = data.Select("champions.id, champions.name, champions.title, champions.image").Scan(&ser).Error
 	errors.HandleError("Err Scan ChampionSearch", err)
 
 	Success(c, ser)

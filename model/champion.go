@@ -6,7 +6,6 @@ type Champion struct {
 	Name           string `json:"name" gorm:"type:varchar(20)"`
 	NameEn         string `json:"name_en" gorm:"type:varchar(20)"`
 	Title          string `json:"title" gorm:"type:varchar(20)"`
-	Thumbnail      string `json:"thumbnail" gorm:"type:varchar(1024)"`
 	Image          string `json:"image" gorm:"type:varchar(1024)"`
 	HeroImage      string `json:"hero_mage" gorm:"type:varchar(1024)"`
 	DifﬁcultyLevel string `json:"difficulty_level" gorm:"type:varchar(20)"`

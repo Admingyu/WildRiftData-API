@@ -1,10 +1,10 @@
 package serialization
 
 type ChampionSearch struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Title     string `json:"title"`
-	Thumbnail string `json:"thumbnail"`
+	ID    int    `json:"id"`
+	Name  string `json:"name"`
+	Title string `json:"title"`
+	Image string `json:"image"`
 }
 
 type ChampionInfo struct {
