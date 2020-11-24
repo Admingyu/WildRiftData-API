@@ -31,3 +31,10 @@ type Role struct {
 	MachineName string `json:"machine_name" gorm:"type:varchar(20)"`
 	Icon        string `json:"icon" gorm:"type:varchar(1024)"`
 }
+
+type Skins struct {
+	ID    int    `json:"id"`
+	Name  string `json:"name" gorm:"type:varchar(20)"`
+	Icon  string `json:"icon" gorm:"type:varchar(1024);comment:'图标'"`
+	Image string `json:"image" gorm:"type:varchar(1024);comment:'图片'"`
+}

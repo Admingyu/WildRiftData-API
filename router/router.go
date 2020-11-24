@@ -13,4 +13,5 @@ func init() {
 	WebEngine.NoRoute()
 	api := WebEngine.Group("/api")
 	controller.RegisterChampion(api)
+	controller.RegisterItems(api)
 }

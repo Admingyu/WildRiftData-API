@@ -49,3 +49,13 @@ type ChampionAbilities struct {
 	Video       string `json:"video" gorm:"type:varchar(1024);comment:'视频'"`
 	PosterImage string `json:"poster_image" gorm:"type:varchar(1024);comment:'海报地址'"`
 }
+
+type ChampionSkins struct {
+	BaseModel
+	Champion Champion `gorm:"foreignKey:ChampionID"`
+
+	ChampionID int    `json:"champion_id" gorm:"type:int;not null"`
+	Name       string `json:"name" gorm:"type:varchar(20)"`
+	Icon       string `json:"icon" gorm:"type:varchar(1024);comment:'图标'"`
+	Image      string `json:"image" gorm:"type:varchar(1024);comment:'图片'"`
+}

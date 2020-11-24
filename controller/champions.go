@@ -57,16 +57,21 @@ func ChampionDetail(c *gin.Context) {
 	errors.HandleError("Err Scan ChampionInfo", err)
 
 	var cabs []serialization.AbilityInfo
-	data = database.DB.Model(model.ChampionAbilities{}).Where("champion_id=?", params.ID).Select("type, title, thumbnail, description, video, poster_image")
+	data = database.DB.Model(model.ChampionAbilities{}).Where("champion_id=?", params.ID).Select("id, type, title, thumbnail, description, video, poster_image")
 	err = data.Scan(&cabs).Error
 	errors.HandleError("Err Scan cabs", err)
 
 	var roles []serialization.Role
-	data = database.DB.Model(model.ChampionRole{}).Joins("join roles r on r.id=champion_roles.role_id").Where("champion_roles.champion_id=?", params.ID).Select(" r.name, r.machine_name, r.icon")
+	data = database.DB.Model(model.ChampionRole{}).Joins("join roles r on r.id=champion_roles.role_id").Where("champion_roles.champion_id=?", params.ID).Select("r.id, r.name, r.machine_name, r.icon")
 	err = data.Scan(&roles).Error
 	errors.HandleError("Err Scan roles", err)
 
-	resp := gin.H{"info": info, "cabs": cabs, "roles": roles}
+	var skins []serialization.Skins
+	data = database.DB.Model(model.ChampionSkins{}).Where("champion_id=?", params.ID).Select("id, name, icon, image")
+	err = data.Scan(&skins).Error
+	errors.HandleError("Err Scan skins", err)
+
+	resp := gin.H{"info": info, "spells": cabs, "roles": roles, "skins": skins}
 	Success(c, resp)
 	return
 }
