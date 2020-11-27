@@ -14,4 +14,5 @@ func init() {
 	api := WebEngine.Group("/api")
 	controller.RegisterChampion(api)
 	controller.RegisterItems(api)
+	controller.RegisterSettings(api)
 }
