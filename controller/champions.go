@@ -15,17 +15,26 @@ import (
 func RegisterChampion(rg *gin.RouterGroup) {
 	r := rg.Group("/champions")
 	r.GET("", ChampionSearch)
+	r.GET("roles", RoleList)
 	r.GET("/detail", ChampionDetail)
 }
 
-// 列表
+// 身份列表
+func RoleList(c *gin.Context) {
+	var roles []serialization.Role
+	err := database.DB.Model(&model.Role{}).Select("name, machine_name").Scan(&roles).Error
+	errors.HandleError("Err get Role", err)
+	Success(c, roles)
+}
+
+// Champion列表
 func ChampionSearch(c *gin.Context) {
 	var params schema.ChampionSearchSchema
 	err := c.ShouldBindQuery(&params)
 	errors.ParamsError("params", err)
 
 	data := database.DB.Model(model.Champion{})
-	if params.Role != "" {
+	if params.Role != "" && params.Role != "all" {
 		data = data.Joins("left join champion_roles cr on cr.champion_id=champions.id").Joins("join roles r on r.id=cr.role_id").Where("r.machine_name=?", params.Role)
 	}
 	if params.DifficultyLevel != "" {
@@ -52,7 +61,7 @@ func ChampionDetail(c *gin.Context) {
 	log.Println(params)
 
 	var info serialization.ChampionInfo
-	data := database.DB.Model(model.Champion{}).Where("champions.id=?", params.ID).Select("champions.id, champions.name, champions.title, champions.hero_image, champions.difficulty_level, champions.video")
+	data := database.DB.Model(model.Champion{}).Where("champions.id=?", params.ID).Select("champions.id, champions.name, champions.title, champions.hero_image, champions.difficulty_level, champions.video, champions.story, champions.alias_tip, champions.enemy_tip")
 	err = data.Scan(&info).Error
 	errors.HandleError("Err Scan ChampionInfo", err)
 

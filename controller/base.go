@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"log"
 	"net/http"
 	"wildrift-api/constant"
 	"wildrift-api/database"
@@ -19,6 +20,7 @@ func Failure(c *gin.Context, data interface{}) {
 }
 
 func GetUserIdByOpenID(openID string) (id int) {
+	log.Println("Getting userID of openID:", openID)
 	err := database.DB.Model(&model.User{}).Where("open_id=?", openID).Select("id").Scan(&id).Error
 	errors.HandleError("Err query user id by open_id", err)
 	return id

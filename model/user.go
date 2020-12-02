@@ -11,6 +11,7 @@ type User struct {
 	City      string `json:"city" gorm:"type:varchar(20);comment:'城市'"`
 	Language  string `json:"language" gorm:"type:varchar(20);comment:'语言'"`
 	Country   string `json:"country" gorm:"type:varchar(20);comment:'国家'"`
+	Darktheme bool   `json:"dark_theme" gorm:"default:0;type:tinyint(1);comment:'是否暗黑主题'"`
 	TimeModel
 }
 

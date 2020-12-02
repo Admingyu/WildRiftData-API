@@ -15,4 +15,5 @@ func init() {
 	controller.RegisterChampion(api)
 	controller.RegisterItems(api)
 	controller.RegisterSettings(api)
+	controller.RegisterNews(api)
 }

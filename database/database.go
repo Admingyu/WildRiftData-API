@@ -22,7 +22,7 @@ func init() {
 	}
 
 	//自动迁移
-	DB.AutoMigrate(model.ClickBoard{}, model.WiFiNetWork{}, model.Device{}, model.User{})
+	DB.AutoMigrate(model.ClickBoard{}, model.WiFiNetWork{}, model.Device{}, model.User{}, model.News{}, model.NewsCategory{})
 
 	RDB = redis.NewClient(&redis.Options{
 		Addr:     "127.0.0.1:6379",

@@ -22,6 +22,7 @@ func RegisterSettings(rg *gin.RouterGroup) {
 	r.POST("/login", SaveUserInfo)
 	r.GET("/devlogs", GetDevLogs)
 	r.GET("/about", About)
+	r.POST("", Setting)
 }
 
 // 小程序code登录
@@ -55,7 +56,7 @@ func GetInfo(c *gin.Context) {
 	err = database.DB.Clauses(clause.OnConflict{Columns: []clause.Column{{Name: "user_id"}}, DoUpdates: clause.AssignmentColumns([]string{"brand", "model", "language", "platform", "system", "version"})}).Create(&device).Error
 	errors.HandleError("Err save deviceInfo", err)
 
-	Success(c, map[string]interface{}{"openID": openID})
+	Success(c, map[string]interface{}{"openID": openID, "darkTheme": user.Darktheme})
 }
 
 // 小程序用户信息报存
@@ -113,6 +114,17 @@ func SaveUserInfo(c *gin.Context) {
 		errors.HandleError("error Save ClickBoard", database.DB.Create(&clickBoard).Error)
 	}
 
+	Success(c, nil)
+}
+
+// 设置
+func Setting(c *gin.Context) {
+	var params schema.Settings
+	err := c.ShouldBindJSON(&params)
+	openID := params.OpenID
+	darkTheme := params.DarkTheme
+	err = database.DB.Model(&model.User{}).Where("open_id=?", openID).Updates(map[string]interface{}{"darktheme": darkTheme}).Error
+	errors.HandleError("Err setting darkTheme", err)
 	Success(c, nil)
 }
 
