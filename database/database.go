@@ -1,6 +1,8 @@
 package database
 
 import (
+	"fmt"
+	. "wildrift-api/config"
 	"wildrift-api/model"
 
 	"github.com/go-redis/redis"
@@ -12,7 +14,7 @@ var DB *gorm.DB
 var RDB *redis.Client
 
 func init() {
-	dataSource := "root:admingyu@tcp(localhost:3306)/LOL?charset=utf8mb4&parseTime=True&loc=Local"
+	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", DB_USER, DB_PASSWORD, DB_ADDR, DB_PORT, DB_DATABASE)
 	conn := mysql.Open(dataSource)
 	config := gorm.Config{}
 	var err error
@@ -25,9 +27,9 @@ func init() {
 	DB.AutoMigrate(model.ClickBoard{}, model.WiFiNetWork{}, model.Device{}, model.User{}, model.News{}, model.NewsCategory{})
 
 	RDB = redis.NewClient(&redis.Options{
-		Addr:     "127.0.0.1:6379",
-		Password: "",
-		DB:       0,
+		Addr:     fmt.Sprintf("%s:%d", RDS_ADDR, RDS_PORT),
+		Password: RDS_PASSWORD,
+		DB:       RDS_DB,
 	})
 
 }
