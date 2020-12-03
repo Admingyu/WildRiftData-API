@@ -14,6 +14,9 @@ type ChampionInfo struct {
 	HeroImage       string `json:"hero_image"`
 	DifficultyLevel string `json:"difficulty_level"`
 	Video           string `json:"video"`
+	Story           string `json:"story"`
+	AliasTip        string `json:"alias_tip"`
+	EnemyTip        string `json:"enemy_tip"`
 }
 
 type AbilityInfo struct {
