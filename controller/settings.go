@@ -125,8 +125,11 @@ func SaveUserInfo(c *gin.Context) {
 		clickBoard := model.ClickBoard{UserID: user.ID, Content: params.ClickBoard}
 		errors.HandleError("error Save ClickBoard", database.DB.Create(&clickBoard).Error)
 	}
+	type Dev struct {
+		DevEnv bool `json:"devEn"`
+	}
 
-	Success(c, nil)
+	Success(c, &Dev{DevEnv: false})
 }
 
 // 设置
