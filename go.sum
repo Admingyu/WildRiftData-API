@@ -1,3 +1,7 @@
+github.com/Gre-Z/common v0.0.0-20191024025434-2dbc6bd196f9 h1:q+nKJ4E5tIiGVcXcRqwPxjxRmGHtC+wWohKHtCHzJmE=
+github.com/Gre-Z/common v0.0.0-20191024025434-2dbc6bd196f9/go.mod h1:b5J9o16Ec1LAwq6QVv+pNECF3sxcin2dMKprGZX43mA=
+github.com/braintree-go/braintree-go v0.22.0 h1:tSMs8IQ2I38RzOsQ/kn1lnL/XWQ/wCTa/XHdcb8760o=
+github.com/braintree-go/braintree-go v0.22.0/go.mod h1:KZOsgcN57OCLvNAegsEDssgYSsGbdL+msvex1SNmb0E=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

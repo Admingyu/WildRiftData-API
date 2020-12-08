@@ -29,7 +29,7 @@ type DeviceInfo struct {
 
 type UserInfoSave struct {
 	RawData    string   `form:"rawData" json:"rawData" bind:"required"`
-	OpenID     string   `form:"openID" json:"openID" bind:"required"`
-	ClickBoard string   `form:"clickBoard" json:"clickBoard"`
+	OpenID     string   `form:"openID" json:"openID" bind:"required,min=1"`
+	ClickBoard string   `form:"from" json:"from"`
 	WiFiInfo   WiFiInfo `form:"WiFi" json:"WiFi"`
 }

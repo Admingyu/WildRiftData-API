@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"wildrift-api/constant"
 	"wildrift-api/database"
 	"wildrift-api/errors"
 	"wildrift-api/model"
 	"wildrift-api/schema"
+	"wildrift-api/serialization"
 	"wildrift-api/utils"
 
 	// "wildrift-api/config"
@@ -32,6 +34,10 @@ func GetInfo(c *gin.Context) {
 	errors.ParamsError("code invalid", err)
 
 	openID, sessionKey := utils.CodeToJSession(params.Code)
+	if openID == "" {
+		Failure(c, constant.INVALID_CODE)
+		return
+	}
 
 	// 缓存sessionKey
 	key := fmt.Sprintf("SessionKey:%s", openID)
@@ -40,7 +46,7 @@ func GetInfo(c *gin.Context) {
 
 	// 保存openid
 	user := model.User{OpenID: openID}
-	err = database.DB.FirstOrCreate(&user, user).Error
+	err = database.DB.Where(model.User{OpenID: openID}).FirstOrCreate(&user).Error
 	errors.HandleError("Err save openID", err)
 
 	// 保存设备信息
@@ -92,8 +98,14 @@ func SaveUserInfo(c *gin.Context) {
 		Country:   info.Country,
 		AvatarUrl: info.AvatarURL,
 	}
-	err = database.DB.Model(&model.User{}).Where("open_id=?", params.OpenID).Updates(&user).Error
+	err = database.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&user).Error
 	errors.HandleError("Err Upsert userinfo", err)
+
+	userID := GetUserIdByOpenID(params.OpenID)
+	if userID == 0 {
+		Failure(c, constant.FAILURE_STATUS)
+		return
+	}
 
 	// 保存网络信息
 	wiFi := model.WiFiNetWork{
@@ -130,12 +142,16 @@ func Setting(c *gin.Context) {
 
 // 开发日志
 func GetDevLogs(c *gin.Context) {
-	data := "<li>2020.11.18：项目创建</li><li>2020.11.21：新闻以及介绍页面</li><li>2020.11.23：媒体服务器地址，优化访问速度</li>"
+	var data []serialization.DevLogSer
+	err := database.DB.Model(&model.DevelopLog{}).Select("title, content, date, version").Order("id desc").Scan(&data).Error
+	errors.HandleError("Err  DevelopLog", err)
 	Success(c, data)
 }
 
 // 关于
 func About(c *gin.Context) {
-	data := `<p>前端：小程序</p> <p >后端：golang</p> <p>数据库：Mysql</p> <p>开发者：G.M.Y</p>`
+	var data serialization.About
+	err := database.DB.Model(&model.About{}).Select("content").Scan(&data).Error
+	errors.HandleError("Err  DevelopLog", err)
 	Success(c, data)
 }

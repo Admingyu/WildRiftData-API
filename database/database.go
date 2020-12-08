@@ -24,20 +24,22 @@ func init() {
 
 	//自动迁移
 	err = DB.AutoMigrate(
-		model.User{},
-		model.Device{},
-		model.ClickBoard{},
-		model.WiFiNetWork{},
-		model.News{},
-		model.NewsCategory{},
-		model.Champion{},
-		model.Role{},
-		model.ChampionRole{},
-		model.ChampionAbilities{},
-		model.ChampionSkins{},
-		model.Items{},
-		model.ItemFroms{},
-		model.ItemTypes{},
+		model.About{},
+		model.DevelopLog{},
+	// model.User{},
+	// model.Device{},
+	// model.ClickBoard{},
+	// model.WiFiNetWork{},
+	// model.News{},
+	// model.NewsCategory{},
+	// model.Champion{},
+	// model.Role{},
+	// model.ChampionRole{},
+	// model.ChampionAbilities{},
+	// model.ChampionSkins{},
+	// model.Items{},
+	// model.ItemFroms{},
+	// model.ItemTypes{},
 	)
 	errors.HandleError("Error Migrate database", err)
 

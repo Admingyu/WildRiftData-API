@@ -3,6 +3,8 @@ module wildrift-api
 go 1.13
 
 require (
+	github.com/Gre-Z/common v0.0.0-20191024025434-2dbc6bd196f9
+	github.com/braintree-go/braintree-go v0.22.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect

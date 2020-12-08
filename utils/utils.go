@@ -25,11 +25,12 @@ func PKCS5UnPadding(origData []byte) []byte {
 
 // AES CBC模式解密
 //key的长度必须是16、24或者32字节，分别用于选择AES-128, AES-192, or AES-256
-func AESDecryptCBC(encryptedData, key []byte) (plainData []byte) {
+func AESDecryptCBC(encryptedData, key, iv []byte) (plainData []byte) {
 	block, _ := aes.NewCipher(key)
 	//AES分组长度为128位，所以blockSize=16，单位字节
-	blockSize := block.BlockSize()
-	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) //初始向量的长度必须等于块block的长度16字节
+	// blockSize := block.BlockSize()
+	// blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) //初始向量的长度必须等于块block的长度16字节
+	blockMode := cipher.NewCBCDecrypter(block, iv)
 	plainData = make([]byte, len(encryptedData))
 	blockMode.CryptBlocks(plainData, encryptedData)
 	plainData = PKCS5UnPadding(plainData)
