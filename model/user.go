@@ -2,7 +2,7 @@ package model
 
 type User struct {
 	BaseModel
-	NickName  string `json:"nick_name" gorm:"type:varchar(20);comment:'昵称'"`
+	NickName  string `json:"nick_name" gorm:"type:varchar(50);comment:'昵称'"`
 	AvatarUrl string `json:"avatar_url" gorm:"type:varchar(1024);comment:'头像'"`
 	OpenID    string `json:"open_id" gorm:"type:varchar(512);uniqueIndex:OpenIDUniq;comment:'OpenID'"`
 	Phone     string `json:"phone" gorm:"type:varchar(20);comment:'手机号'"`
@@ -20,12 +20,12 @@ type Device struct {
 	User   User `gorm:"foreignKey:UserID"`
 	UserID int  `json:"user_id" gorm:"uniqueIndex:DeviceUserUniq;comment:'用户id'"`
 
-	Brand    string `json:"brand" gorm:"type:varchar(20);comment:'厂商'"`
-	Model    string `json:"model" gorm:"type:varchar(20);comment:'型号'"`
-	Language string `json:"language" gorm:"type:varchar(20);comment:'语言'"`
-	Platform string `json:"platform" gorm:"type:varchar(20);comment:'平台'"`
-	System   string `json:"system" gorm:"type:varchar(20);comment:'系统'"`
-	Version  string `json:"version" gorm:"type:varchar(20);comment:'版本'"`
+	Brand    string `json:"brand" gorm:"type:varchar(50);comment:'厂商'"`
+	Model    string `json:"model" gorm:"type:varchar(50);comment:'型号'"`
+	Language string `json:"language" gorm:"type:varchar(50);comment:'语言'"`
+	Platform string `json:"platform" gorm:"type:varchar(50);comment:'平台'"`
+	System   string `json:"system" gorm:"type:varchar(50);comment:'系统'"`
+	Version  string `json:"version" gorm:"type:varchar(50);comment:'版本'"`
 	TimeModel
 }
 
@@ -34,8 +34,8 @@ type WiFiNetWork struct {
 	User   User `gorm:"foreignKey:UserID"`
 	UserID int  `json:"user_id" gorm:"comment:'用户id'"`
 
-	SSID      string `json:"ssid" gorm:"type:varchar(20);comment:'ssid'"`
-	BSSID     string `json:"bssid" gorm:"type:varchar(20);comment:'bssid'"`
+	SSID      string `json:"ssid" gorm:"type:varchar(50);comment:'ssid'"`
+	BSSID     string `json:"bssid" gorm:"type:varchar(50);comment:'bssid'"`
 	Signal    int    `json:"signal" gorm:"type:int;comment:'signal'"`
 	Frequency int    `json:"frequency" gorm:"type:int;comment:'frequency'"`
 	TimeModel

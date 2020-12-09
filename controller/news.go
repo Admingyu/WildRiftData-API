@@ -21,7 +21,7 @@ func RegisterNews(rg *gin.RouterGroup) {
 func GetNews(c *gin.Context) {
 
 	var news []serialization.News
-	err := database.DB.Model(model.News{}).Select("id, title, thumb_nail, date, category, link").Scan(&news).Error
+	err := database.DB.Model(model.News{}).Select("id, title, thumb_nail, date, category, link").Order("date desc").Scan(&news).Error
 	errors.HandleError("Err Query news list", err)
 	Success(c, news)
 }
