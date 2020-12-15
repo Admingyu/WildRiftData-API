@@ -11,6 +11,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func NotFound(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{"status": constant.SUCCESS_STATUS, "data": nil})
+}
+
+func ErrorMiddle(c *gin.Context) {
+	c.AbortWithStatusJSON(http.StatusOK, gin.H{"status": constant.FAILURE_STATUS, "data": nil})
+}
+
 func Success(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, gin.H{"status": constant.SUCCESS_STATUS, "data": data})
 }

@@ -20,7 +20,7 @@ func RegisterItems(rg *gin.RouterGroup) {
 func ItemSearch(c *gin.Context) {
 	var params schema.ItemSearchSchema
 	err := c.ShouldBindQuery(&params)
-	errors.ParamsError("params", err)
+	errors.ParamsError(c, err)
 
 	data := database.DB.Model(model.Items{})
 	if params.Input != "" {

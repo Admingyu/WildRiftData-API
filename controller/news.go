@@ -30,7 +30,7 @@ func GetNews(c *gin.Context) {
 func GetNewsDetail(c *gin.Context) {
 	var params schema.IdSchema
 	err := c.ShouldBindQuery(&params)
-	errors.ParamsError(c.FullPath(), err)
+	errors.ParamsError(c, err)
 
 	var detail serialization.NewsDetail
 	err = database.DB.Model(model.News{}).Where("id=?", params.ID).Select("id, title, thumb_nail, date, category, link, content, description").Scan(&detail).Error

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/json"
@@ -16,26 +17,41 @@ func LikeFormat(s string) string {
 	return fmt.Sprintf("%%%s%%", s)
 }
 
-//去除填充数据
-func PKCS5UnPadding(origData []byte) []byte {
-	length := len(origData)
-	unpadding := int(origData[length-1])
-	return origData[:(length - unpadding)]
+func PKCS7Padding(ciphertext []byte) []byte {
+	padding := aes.BlockSize - len(ciphertext)%aes.BlockSize
+	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(ciphertext, padtext...)
 }
 
-// AES CBC模式解密
-//key的长度必须是16、24或者32字节，分别用于选择AES-128, AES-192, or AES-256
-func AESDecryptCBC(encryptedData, key, iv []byte) (plainData []byte) {
-	block, _ := aes.NewCipher(key)
-	//AES分组长度为128位，所以blockSize=16，单位字节
-	// blockSize := block.BlockSize()
-	// blockMode := cipher.NewCBCDecrypter(block, key[:blockSize]) //初始向量的长度必须等于块block的长度16字节
-	blockMode := cipher.NewCBCDecrypter(block, iv)
-	plainData = make([]byte, len(encryptedData))
-	blockMode.CryptBlocks(plainData, encryptedData)
-	plainData = PKCS5UnPadding(plainData)
-	return plainData
+func PKCS7UnPadding(plantText []byte) []byte {
+	length := len(plantText)
+	unpadding := int(plantText[length-1])
+	return plantText[:(length - unpadding)]
+}
 
+// Aes加密
+func AesEncrypt(plainData, key, iv []byte) {
+	plainData = PKCS7Padding(plainData)
+	ciphertext := make([]byte, len(plainData))
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		panic(err)
+	}
+	mode := cipher.NewCBCEncrypter(block, iv)
+	mode.CryptBlocks(ciphertext, plainData)
+	fmt.Printf("%x\n", ciphertext)
+}
+
+// Aes解密
+func AesDecrypt(enData, key, iv []byte) []byte {
+	block, err := aes.NewCipher(key)
+	if err != nil {
+		panic(err)
+	}
+	mode := cipher.NewCBCDecrypter(block, iv)
+	mode.CryptBlocks(enData, enData)
+	enData = PKCS7UnPadding(enData)
+	return enData
 }
 
 // Code 换取openid和sessionKey

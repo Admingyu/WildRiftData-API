@@ -14,6 +14,6 @@ func main() {
 	enB, _ := base64.StdEncoding.DecodeString(en)
 	enKey, _ := base64.StdEncoding.DecodeString(sign)
 	eniv, _ := base64.StdEncoding.DecodeString(iv)
-	res := utils.AESDecryptCBC(enB, enKey, eniv)
+	res := utils.AesDecrypt(enB, enKey, eniv)
 	log.Println(res)
 }

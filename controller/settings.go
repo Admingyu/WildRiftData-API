@@ -20,6 +20,7 @@ import (
 
 func RegisterSettings(rg *gin.RouterGroup) {
 	r := rg.Group("/settings")
+	r.GET("/generate204", Generate204)
 	r.POST("/code", GetInfo)
 	r.POST("/login", SaveUserInfo)
 	r.GET("/devlogs", GetDevLogs)
@@ -31,7 +32,7 @@ func RegisterSettings(rg *gin.RouterGroup) {
 func GetInfo(c *gin.Context) {
 	var params schema.CodeSchema
 	err := c.ShouldBindJSON(&params)
-	errors.ParamsError("code invalid", err)
+	errors.ParamsError(c, err)
 
 	openID, sessionKey := utils.CodeToJSession(params.Code)
 	if openID == "" {
@@ -69,7 +70,7 @@ func GetInfo(c *gin.Context) {
 func SaveUserInfo(c *gin.Context) {
 	var params schema.UserInfoSave
 	err := c.ShouldBindJSON(&params)
-	errors.ParamsError("UserInfo RawData invalid", err)
+	errors.ParamsError(c, err)
 
 	// 解析传过来的用户信息json
 	type DataStruct struct {
@@ -85,7 +86,7 @@ func SaveUserInfo(c *gin.Context) {
 	var info DataStruct
 	err = json.Unmarshal([]byte(params.RawData), &info)
 	errors.HandleError("error unmarshal userinfo", err)
-	log.Println("Info:", info.AvatarURL)
+	log.Println("Info:", info)
 
 	// 保存，更新用户信息
 	user := model.User{
@@ -129,10 +130,10 @@ func SaveUserInfo(c *gin.Context) {
 		DevEnv bool `json:"devEn"`
 	}
 
-	Success(c, &Dev{DevEnv: false})
+	Success(c, &Dev{DevEnv: true})
 }
 
-// 设置
+//  保存设置
 func Setting(c *gin.Context) {
 	var params schema.Settings
 	err := c.ShouldBindJSON(&params)
@@ -157,4 +158,8 @@ func About(c *gin.Context) {
 	err := database.DB.Model(&model.About{}).Select("content").Scan(&data).Error
 	errors.HandleError("Err  DevelopLog", err)
 	Success(c, data)
+}
+
+func Generate204(c *gin.Context) {
+	Success(c, nil)
 }

@@ -31,7 +31,7 @@ func RoleList(c *gin.Context) {
 func ChampionSearch(c *gin.Context) {
 	var params schema.ChampionSearchSchema
 	err := c.ShouldBindQuery(&params)
-	errors.ParamsError("params", err)
+	errors.ParamsError(c, err)
 
 	data := database.DB.Model(model.Champion{})
 	if params.Role != "" && params.Role != "all" {
@@ -57,7 +57,7 @@ func ChampionSearch(c *gin.Context) {
 func ChampionDetail(c *gin.Context) {
 	var params schema.IdSchema
 	err := c.ShouldBindQuery(&params)
-	errors.ParamsError("params", err)
+	errors.ParamsError(c, err)
 	log.Println(params)
 
 	var info serialization.ChampionInfo
