@@ -47,5 +47,7 @@ func init() {
 		Password: RDS_PASSWORD,
 		DB:       RDS_DB,
 	})
+	err = RDB.Time().Err()
+	errors.HandleError("Error connect redis", err)
 
 }

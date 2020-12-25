@@ -33,3 +33,7 @@ type UserInfoSave struct {
 	ClickBoard string   `form:"from" json:"from"`
 	WiFiInfo   WiFiInfo `form:"WiFi" json:"WiFi"`
 }
+
+type IDSchema struct {
+	ID int `form:"id" json:"id"`
+}

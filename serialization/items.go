@@ -12,3 +12,17 @@ type Items struct {
 	Tag         string `json:"tag" gorm:"type:varchar(255);comment:'标签'"`
 	Keywords    string `json:"keywords" gorm:"type:varchar(255);comment:'关键词'"`
 }
+
+type Item struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
+	Icon string `json:"icon"`
+}
+
+type ItemSons []struct {
+	ID         int    `json:"id"`
+	Name       string `json:"name"`
+	Icon       string `json:"icon"`
+	Children   []Item `json:"children"`
+	ChildCount int    `json:"child_count"`
+}
