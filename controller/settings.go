@@ -99,7 +99,9 @@ func SaveUserInfo(c *gin.Context) {
 		Country:   info.Country,
 		AvatarUrl: info.AvatarURL,
 	}
-	err = database.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&user).Error
+	err = database.DB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "OpenID"}},
+		DoUpdates: clause.AssignmentColumns([]string{"avatar_url", "nick_name"})}).Create(&user).Error
 	errors.HandleError("Err Upsert userinfo", err)
 
 	userID := GetUserIdByOpenID(params.OpenID)
