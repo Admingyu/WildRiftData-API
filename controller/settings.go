@@ -63,7 +63,9 @@ func GetInfo(c *gin.Context) {
 	err = database.DB.Clauses(clause.OnConflict{Columns: []clause.Column{{Name: "user_id"}}, DoUpdates: clause.AssignmentColumns([]string{"brand", "model", "language", "platform", "system", "version"})}).Create(&device).Error
 	errors.HandleError("Err save deviceInfo", err)
 
-	Success(c, map[string]interface{}{"openID": openID, "darkTheme": user.Darktheme})
+	notice := map[string]interface{}{"home": "新增符文页功能，入口在装备页面", "settings": "战绩查询，关联，功能测试不通过，太不稳定啦"}
+
+	Success(c, map[string]interface{}{"openID": openID, "darkTheme": user.Darktheme, "notice": notice})
 }
 
 // 小程序用户信息报存
