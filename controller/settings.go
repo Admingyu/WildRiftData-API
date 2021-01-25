@@ -134,7 +134,7 @@ func SaveUserInfo(c *gin.Context) {
 		DevEnv bool `json:"devEn"`
 	}
 
-	Success(c, &Dev{DevEnv: true})
+	Success(c, &Dev{DevEnv: false})
 }
 
 //  保存设置
