@@ -2,7 +2,7 @@ package constant
 
 var (
 	SERVER_PORT    = 5002
-	ADMIN_PASSWORD = "@qasdmingyu"
+	ADMIN_PASSWORD = "" //省的GitHub跟我说我随便填的密码是涉嫌泄露
 
 	SUCCESS_STATUS    = "SUCCESS"
 	FAILURE_STATUS    = "FAILURE"
