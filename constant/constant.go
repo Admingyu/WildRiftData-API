@@ -1,7 +1,7 @@
 package constant
 
 var (
-	SERVER_PORT    = 5003
+	SERVER_PORT    = 5002
 	ADMIN_PASSWORD = "@qasdmingyu"
 
 	SUCCESS_STATUS    = "SUCCESS"

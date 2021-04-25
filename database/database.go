@@ -4,7 +4,7 @@ import (
 	"fmt"
 	. "wildrift-api/config"
 	"wildrift-api/errors"
-
+	"wildrift-api/model"
 	"github.com/go-redis/redis"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -23,8 +23,8 @@ func init() {
 
 	//自动迁移
 	err = DB.AutoMigrate(
-	// model.About{},
-	// model.DevelopLog{},
+	 model.About{},
+	 model.DevelopLog{},
 	// model.User{},
 	// model.Device{},
 	// model.ClickBoard{},
