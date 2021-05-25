@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"wildrift-api/constant"
 	"wildrift-api/router"
@@ -13,5 +14,8 @@ func main() {
 		Handler: router.WebEngine,
 	}
 
-	server.ListenAndServe()
+	err := server.ListenAndServe()
+	if err != nil {
+		log.Println(err)
+	}
 }

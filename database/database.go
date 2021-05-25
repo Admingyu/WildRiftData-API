@@ -38,6 +38,7 @@ func init() {
 		model.Items{},
 		model.ItemFroms{},
 		model.ItemTypes{},
+		model.Temperature{},
 	)
 	errors.HandleError("Error Migrate database", err)
 
