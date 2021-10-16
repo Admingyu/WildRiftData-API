@@ -63,7 +63,9 @@ func GetInfo(c *gin.Context) {
 	err = database.DB.Clauses(clause.OnConflict{Columns: []clause.Column{{Name: "user_id"}}, DoUpdates: clause.AssignmentColumns([]string{"brand", "model", "language", "platform", "system", "version"})}).Create(&device).Error
 	errors.HandleError("Err save deviceInfo", err)
 
-	Success(c, map[string]interface{}{"openID": openID, "darkTheme": user.Darktheme})
+	notice := map[string]interface{}{"home": "新增符文页功能，入口在装备页面", "settings": "战绩查询，关联，功能测试不通过，太不稳定啦"}
+
+	Success(c, map[string]interface{}{"openID": openID, "darkTheme": user.Darktheme, "notice": notice})
 }
 
 // 小程序用户信息报存
@@ -99,7 +101,9 @@ func SaveUserInfo(c *gin.Context) {
 		Country:   info.Country,
 		AvatarUrl: info.AvatarURL,
 	}
-	err = database.DB.Clauses(clause.OnConflict{DoNothing: true}).Create(&user).Error
+	err = database.DB.Clauses(clause.OnConflict{
+		Columns:   []clause.Column{{Name: "OpenID"}},
+		DoUpdates: clause.AssignmentColumns([]string{"avatar_url", "nick_name"})}).Create(&user).Error
 	errors.HandleError("Err Upsert userinfo", err)
 
 	userID := GetUserIdByOpenID(params.OpenID)
@@ -130,7 +134,7 @@ func SaveUserInfo(c *gin.Context) {
 		DevEnv bool `json:"devEn"`
 	}
 
-	Success(c, &Dev{DevEnv: true})
+	Success(c, &Dev{DevEnv: false})
 }
 
 //  保存设置

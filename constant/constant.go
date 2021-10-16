@@ -3,7 +3,6 @@ package constant
 var (
 	SERVER_PORT    = 5002
 	ADMIN_PASSWORD = "@qasdmingyu"
-
 	SUCCESS_STATUS    = "SUCCESS"
 	FAILURE_STATUS    = "FAILURE"
 	INVALID_CODE      = "CODE不正确"

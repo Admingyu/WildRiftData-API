@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"runtime/debug"
 	"time"
 	"wildrift-api/config"
 	"wildrift-api/constant"
@@ -49,7 +50,7 @@ func PanicRecovery() gin.HandlerFunc {
 					}
 				}
 				c.AbortWithStatusJSON(statusCode, gin.H{"status": constant.FAILURE_STATUS, "message": errorType, "data": nil})
-				log.Println(err)
+				log.Println(string(debug.Stack()))
 			}
 		}()
 		c.Next()
